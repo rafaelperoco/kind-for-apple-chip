@@ -1,6 +1,7 @@
 #!/bin/bash
-#LOCAL_IP_ipv4=$(ifconfig | grep -A 1 "en0" | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 2)
-LOCAL_IP=$(ifconfig | grep -A 5 "en0" | grep -A 1 "inet" | head -1 | cut -d ':' -f 2 | cut -d ' ' -f 2)
+## Get default network interface to fill up LOCAL_IP environment variable
+KIND_DEFAULT_IF=$(route -n get default | grep -A 1 "interface" | head -1 | cut -d ':' -f 2 | cut -d ' ' -f 2)
+LOCAL_IP=$(ifconfig $KIND_DEFAULT_IF | grep -w inet | tail -1 | cut -d ':' -f 2 | cut -d ' ' -f 2)
 CLUSTER_NAME=cluster-$(openssl rand -hex 3)
 IMAGE="rossgeorgiev/kind-node-arm64:v1.20.0"
 kind create cluster --name $CLUSTER_NAME --config cluster/cluster.yaml --image $IMAGE
