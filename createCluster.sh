@@ -18,7 +18,7 @@ helm repo add metallb https://metallb.github.io/metallb
 helm repo update
 helm install calico projectcalico/tigera-operator --namespace calico-system --create-namespace --version v3.20.0
 kubectl wait --for condition=Available=True deploy/tigera-operator -n tigera-operator --timeout -1s
-helm install metrics-server bitnami/metrics-server --set rbac.create=true --set extraArgs.kubelet-insecure-tls=true --set extraArgs.kubelet-preferred-address-types=InternalIP --set apiService.create=true
+helm install metrics-server bitnami/metrics-server --namespace kube-system --set rbac.create=true --set extraArgs.kubelet-insecure-tls=true --set apiService.create=true
 kubectl wait --for condition=Available=True deploy/metrics-server -n kube-system --timeout -1s
 helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx  --create-namespace -f infra/ingress-nginx-values.yaml
 kubectl wait --for condition=Available=True deploy/ingress-nginx-controller -n ingress-nginx --timeout -1s
