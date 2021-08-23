@@ -2,16 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: podinfo-ingress
-  annotations:
-    kubernetes.io/ingress.class: nginx
+  namespace: default
 spec:
+  ingressClassName: nginx
   rules:
-  - http:
+  - host: 0a580067.nip.io
+    http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
             name: podinfo
             port:
               number: 80
+        path: /
+        pathType: Prefix

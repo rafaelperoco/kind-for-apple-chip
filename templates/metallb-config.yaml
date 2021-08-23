@@ -1,11 +1,16 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  namespace: metallb-system
-  name: config
-data:
-  config: |
-    address-pools:
+controller:
+  nodeSelector:
+    nodeapp: loadbalancer
+  tolerations: 
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule
+
+speaker:
+  nodeSelector:
+    nodeapp: loadbalancer
+
+configInline:
+  address-pools:
     - name: default
       protocol: layer2
       addresses:
