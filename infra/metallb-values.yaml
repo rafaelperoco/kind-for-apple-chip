@@ -1,0 +1,17 @@
+controller:
+  nodeSelector:
+    nodeapp: loadbalancer
+  tolerations: 
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule
+
+speaker:
+  nodeSelector:
+    nodeapp: loadbalancer
+
+configInline:
+  address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 10.88.0.103/32

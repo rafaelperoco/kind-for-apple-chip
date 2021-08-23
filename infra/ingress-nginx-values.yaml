@@ -1,0 +1,12 @@
+controller:
+  nodeSelector:
+    nodeapp: loadbalancer
+  podLabels:
+    nodeapp: loadbalancer
+  tolerations: 
+    - key: node-role.kubernetes.io/master
+      effect: NoSchedule
+
+service:
+    annotations:
+      metallb.universe.tf/address-pool: default
